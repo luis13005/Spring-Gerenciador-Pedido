@@ -51,6 +51,9 @@ public class Principal {
             }
         }
     }
+    private void Pedidos(){
+
+    }
     private void Produtos(){
 
         System.out.println("""

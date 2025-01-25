@@ -7,6 +7,11 @@ import com.gerenciadorpedidos.demo.repository.RepositoryProduto;
 
 import java.util.Scanner;
 
+import static com.gerenciadorpedidos.demo.models.Pedido.inserirPedido;
+import static com.gerenciadorpedidos.demo.models.Pedido.listarPedidos;
+import static com.gerenciadorpedidos.demo.models.Produto.inserirProduto;
+import static com.gerenciadorpedidos.demo.models.Produto.listarProdutos;
+
 public class Principal {
     private Scanner scanner = new Scanner(System.in);
     private RepositoryProduto repositoryProduto;
@@ -40,7 +45,7 @@ public class Principal {
                     break;
 
                 case 2:
-
+                    Pedidos();
                     break;
 
                 case 3:
@@ -52,8 +57,26 @@ public class Principal {
         }
     }
     private void Pedidos(){
+        System.out.println("""
+                1 - Inserir Peido
+                2 - Listar Pedidos
+                """);
+        var escolha = scanner.nextInt();
 
+        switch (escolha){
+            case 1:
+                inserirPedido(repositoryProduto,repositoryPedido);
+                break;
+
+            case 2:
+                listarPedidos(repositoryPedido);
+                break;
+
+            default:
+                System.out.println("Insira uma Opção válida!");
+        }
     }
+
     private void Produtos(){
 
         System.out.println("""
@@ -61,30 +84,18 @@ public class Principal {
                 2 - Listar Produtos
                 """);
         var escolhaProduto = scanner.nextInt();
+
         switch (escolhaProduto){
             case 1:
-                inserirProduto();
+                inserirProduto(repositoryProduto);
                 break;
 
             case 2:
-                listarProdutos();
+                listarProdutos(repositoryProduto);
                 break;
+
+            default:
+                System.out.println("Insira uma Opção válida!");
         }
-    }
-    public void inserirProduto(){
-        System.out.println("Digite o nome do produto");
-        var nomeProduto = scanner.nextLine();
-
-        System.out.println("Digite o valor do Produto");
-        var valorProduto = scanner.nextDouble();
-
-        Produto produto = new Produto(nomeProduto,
-                valorProduto);
-
-        repositoryProduto.save(produto);
-    }
-
-    public void listarProdutos(){
-        System.out.println(repositoryProduto.findAll());
     }
 }

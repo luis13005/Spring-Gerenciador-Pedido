@@ -4,7 +4,10 @@ import com.gerenciadorpedidos.demo.repository.RepositoryProduto;
 import jakarta.persistence.*;
 import org.antlr.v4.runtime.misc.NotNull;
 import org.hibernate.annotations.NotFound;
+import org.hibernate.mapping.List;
+import org.springframework.dao.DataIntegrityViolationException;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 @Entity
@@ -18,6 +21,8 @@ public class Produto {
     private String nome;
     @Column(name = "valor")
     private Double preco;
+
+    public Produto(){}
 
     public Produto(String nome,
                    double preco){
@@ -43,21 +48,28 @@ public class Produto {
     }
 
     public static void inserirProduto(RepositoryProduto repositoryProduto){
-        Scanner leitura = new Scanner(System.in);
+        try{
+            Scanner leitura = new Scanner(System.in);
 
-        System.out.println("Digite o nome do produto");
-        var nomeProduto = leitura.nextLine();
+            System.out.println("Digite o nome do produto");
+            var nomeProduto = leitura.nextLine();
 
-        System.out.println("Digite o valor do Produto");
-        var valorProduto = leitura.nextDouble();
+            System.out.println("Digite o valor do Produto");
+            var valorProduto = leitura.nextDouble();
 
-        Produto produto = new Produto(nomeProduto,
-                valorProduto);
+            Produto produto = new Produto(nomeProduto,
+                    valorProduto);
 
-        repositoryProduto.save(produto);
+            repositoryProduto.save(produto);
+        }catch (InputMismatchException e){
+            System.out.println(e.getMessage());
+        }catch(DataIntegrityViolationException ex){
+            System.out.println("Produto já cadastrado!");
+        }
     }
 
     public static void listarProdutos(RepositoryProduto repositoryProduto){
+
         System.out.println(repositoryProduto.findAll());
     }
 }

@@ -3,8 +3,10 @@ package com.gerenciadorpedidos.demo.models;
 import com.gerenciadorpedidos.demo.repository.RepositoryPedido;
 import com.gerenciadorpedidos.demo.repository.RepositoryProduto;
 import jakarta.persistence.*;
+import org.springframework.data.jpa.repository.Query;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Scanner;
 
 @Entity
@@ -18,6 +20,8 @@ public class Pedido {
     @JoinColumn(name = "produtoId",referencedColumnName = "ProdutoId")
     private Long produtoId;
 
+    public Pedido(){}
+
     public Pedido(LocalDate pedidoData,
                   Long produtoId){
         this.pedidoData = pedidoData;
@@ -28,11 +32,23 @@ public class Pedido {
         return pedidoData;
     }
 
+    @Override
+    public String toString() {
+        return "Pedido: "+this.pedidoId+"\nProduto: "+this.produtoId+"\nData: "+this.pedidoData;
+    }
+
     public static void inserirPedido(RepositoryProduto repositoryProduto, RepositoryPedido repositoryPedido){
         Scanner leitura = new Scanner(System.in);
-        System.out.println(repositoryProduto.findAll());
 
-        System.out.println("Escolha o Pedido para adicionar ao produto");
+        List<Produto> produtos = repositoryProduto.findAll();
+
+        produtos.stream()
+                        .map(n ->
+                            "Id: "+n.getProdutoId()+" Produto: "+n.getNome()
+                        )
+                                .forEach(System.out::println);
+
+        System.out.println("\nEscolha o Pedido para adicionar ao produto");
         var prodId = leitura.nextLong();
 
         Pedido pedido = new Pedido(LocalDate.now(),prodId);

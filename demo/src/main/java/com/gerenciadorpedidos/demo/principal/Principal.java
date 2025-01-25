@@ -7,6 +7,8 @@ import com.gerenciadorpedidos.demo.repository.RepositoryProduto;
 
 import java.util.Scanner;
 
+import static com.gerenciadorpedidos.demo.models.Categoria.inserirCategoria;
+import static com.gerenciadorpedidos.demo.models.Categoria.listarCategoria;
 import static com.gerenciadorpedidos.demo.models.Pedido.inserirPedido;
 import static com.gerenciadorpedidos.demo.models.Pedido.listarPedidos;
 import static com.gerenciadorpedidos.demo.models.Produto.inserirProduto;
@@ -49,6 +51,7 @@ public class Principal {
                     break;
 
                 case 3:
+                    Categoria();
                     break;
 
                 default:
@@ -56,9 +59,30 @@ public class Principal {
             }
         }
     }
+    private void Categoria(){
+        System.out.println("""
+                \n1 - Inserir Categoria
+                2 - Listar Categorias
+                """);
+        var escolha = scanner.nextInt();
+
+        switch (escolha){
+            case 1:
+                inserirCategoria(repositoryCategoria);
+                break;
+
+            case 2:
+                listarCategoria(repositoryCategoria);
+                break;
+
+            default:
+                System.out.println("Insira uma Opção válida!");
+        }
+    }
+
     private void Pedidos(){
         System.out.println("""
-                1 - Inserir Peido
+                \n1 - Inserir Peido
                 2 - Listar Pedidos
                 """);
         var escolha = scanner.nextInt();

@@ -2,6 +2,7 @@ package com.gerenciadorpedidos.demo;
 
 import com.gerenciadorpedidos.demo.principal.Principal;
 import com.gerenciadorpedidos.demo.repository.RepositoryCategoria;
+import com.gerenciadorpedidos.demo.repository.RepositoryFornecedor;
 import com.gerenciadorpedidos.demo.repository.RepositoryPedido;
 import com.gerenciadorpedidos.demo.repository.RepositoryProduto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,8 @@ public class GerenciadorpedidosApplication implements CommandLineRunner {
 	private RepositoryCategoria repositoryCategoria;
 	@Autowired
 	private RepositoryPedido repositoryPedido;
+	@Autowired
+	private RepositoryFornecedor repositoryFornecedor;
 
 	public static void main(String[] args) {
 		SpringApplication.run(GerenciadorpedidosApplication.class, args);
@@ -25,7 +28,7 @@ public class GerenciadorpedidosApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		Principal principal = new Principal(repositoryProduto,repositoryCategoria,repositoryPedido);
+		Principal principal = new Principal(repositoryProduto,repositoryCategoria,repositoryPedido,repositoryFornecedor);
 		principal.exibe();
 	}
 }

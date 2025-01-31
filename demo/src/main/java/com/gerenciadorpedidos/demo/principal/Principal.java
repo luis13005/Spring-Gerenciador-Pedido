@@ -2,12 +2,14 @@ package com.gerenciadorpedidos.demo.principal;
 
 import com.gerenciadorpedidos.demo.models.Produto;
 import com.gerenciadorpedidos.demo.repository.RepositoryCategoria;
+import com.gerenciadorpedidos.demo.repository.RepositoryFornecedor;
 import com.gerenciadorpedidos.demo.repository.RepositoryPedido;
 import com.gerenciadorpedidos.demo.repository.RepositoryProduto;
 
 import java.util.Scanner;
 
 import static com.gerenciadorpedidos.demo.models.Categoria.*;
+import static com.gerenciadorpedidos.demo.models.Fornecedor.listarFornecedor;
 import static com.gerenciadorpedidos.demo.models.Pedido.inserirPedido;
 import static com.gerenciadorpedidos.demo.models.Pedido.listarPedidos;
 import static com.gerenciadorpedidos.demo.models.Produto.inserirProduto;
@@ -18,14 +20,17 @@ public class Principal {
     private RepositoryProduto repositoryProduto;
     private RepositoryCategoria repositoryCategoria;
     private RepositoryPedido repositoryPedido;
+    private RepositoryFornecedor repositoryFornecedor;
 
     public Principal(RepositoryProduto repositoryProduto,
                      RepositoryCategoria repositoryCategoria,
-                     RepositoryPedido repositoryPedido) {
+                     RepositoryPedido repositoryPedido,
+                     RepositoryFornecedor repositoryFornecedor) {
 
             this.repositoryProduto = repositoryProduto;
             this.repositoryCategoria = repositoryCategoria;
             this.repositoryPedido = repositoryPedido;
+            this.repositoryFornecedor = repositoryFornecedor;
     }
 
     public void exibe(){
@@ -33,8 +38,9 @@ public class Principal {
         while (menuEscolha != 0){
             System.out.println("""
                 1 - Produto
-                2 - Pedido
-                3 - Categoria
+                2 - Categoria
+                3 - Pedido
+                
                
                 0 - Sair
                 """);
@@ -46,11 +52,15 @@ public class Principal {
                     break;
 
                 case 2:
-                    Pedidos();
+                    Categoria();
                     break;
 
                 case 3:
-                    Categoria();
+                    Pedidos();
+                    break;
+
+                case 4:
+                    Fornecedor();
                     break;
 
                 default:
@@ -58,6 +68,25 @@ public class Principal {
             }
         }
     }
+
+    private void Fornecedor(){
+        System.out.println("""
+                1 - Inserir Fornecedor
+                2 - Listar Fornecedor
+                """);
+        var escolha = scanner.nextInt();
+        switch (escolha){
+            case 1:
+                listarFornecedor(repositoryFornecedor);
+                break;
+
+            case 2:
+                break;
+            default:
+                System.out.println("Insira uma Opção válida!");
+        }
+    }
+
     private void Categoria(){
         System.out.println("""
                 \n1 - Inserir Categoria

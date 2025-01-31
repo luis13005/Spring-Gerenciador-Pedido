@@ -2,12 +2,10 @@ package com.gerenciadorpedidos.demo.models;
 
 import com.gerenciadorpedidos.demo.repository.RepositoryProduto;
 import jakarta.persistence.*;
-import org.antlr.v4.runtime.misc.NotNull;
-import org.hibernate.annotations.NotFound;
-import org.hibernate.mapping.List;
 import org.springframework.dao.DataIntegrityViolationException;
 
 import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Scanner;
 
 @Entity
@@ -24,6 +22,12 @@ public class Produto {
     @ManyToOne
     @JoinColumn(name = "categoriaId")
     private Categoria categoria;
+    @ManyToMany(mappedBy = "produtos")
+    private List<Pedido> pedidos;
+    @ManyToOne
+    @JoinColumn(name = "fornecedorId")
+    private Fornecedor fornecedor;
+
 
     public Produto(){}
 
@@ -63,6 +67,14 @@ public class Produto {
 
     public void setCategoria(Categoria categoria) {
         this.categoria = categoria;
+    }
+
+    public List<Pedido> getPedidos() {
+        return pedidos;
+    }
+
+    public void setPedidos(List<Pedido> pedidos) {
+        this.pedidos = pedidos;
     }
 
     @Override

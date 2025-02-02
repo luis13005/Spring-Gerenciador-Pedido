@@ -1,11 +1,13 @@
 package com.gerenciadorpedidos.demo.models;
 
+import com.gerenciadorpedidos.demo.repository.RepositoryFornecedor;
 import com.gerenciadorpedidos.demo.repository.RepositoryProduto;
 import jakarta.persistence.*;
 import org.springframework.dao.DataIntegrityViolationException;
 
 import java.util.InputMismatchException;
 import java.util.List;
+import java.util.Optional;
 import java.util.Scanner;
 
 @Entity
@@ -28,13 +30,14 @@ public class Produto {
     @JoinColumn(name = "fornecedorId")
     private Fornecedor fornecedor;
 
-
     public Produto(){}
 
     public Produto(String nome,
-                   double preco){
+                   double preco,
+                   Fornecedor fornecedor){
             this.nome = nome;
             this.preco = preco;
+            this.fornecedor = fornecedor;
     }
 
     public Long getProdutoId() {
@@ -82,7 +85,8 @@ public class Produto {
         return "Nome: "+this.nome+"\nPreço: "+this.preco;
     }
 
-    public static void inserirProduto(RepositoryProduto repositoryProduto){
+    public static void inserirProduto(RepositoryProduto repositoryProduto,
+                                      RepositoryFornecedor repositoryFornecedor){
         try{
             Scanner leitura = new Scanner(System.in);
 
@@ -92,10 +96,26 @@ public class Produto {
             System.out.println("Digite o valor do Produto");
             var valorProduto = leitura.nextDouble();
 
-            Produto produto = new Produto(nomeProduto,
-                    valorProduto);
+            List<Fornecedor> fornecedores = repositoryFornecedor.findAll();
+            fornecedores.forEach(System.out::println);
 
-            repositoryProduto.save(produto);
+            System.out.println("Informe o Fornecedor: ");
+            leitura.nextLine();
+            var nomeFornecedor = leitura.nextLine();
+
+            System.out.println("Fornecedor: "+nomeFornecedor);
+            Optional<Fornecedor> first = fornecedores.stream()
+                    .filter(f -> f.getNome().equalsIgnoreCase(nomeFornecedor))
+                    .findFirst();
+            System.out.println("IS PRESENT: "+first.isPresent());
+            if (first.isPresent()){
+                Fornecedor fornecedor = first.get();
+                System.out.println(fornecedor);
+                Produto produto = new Produto(nomeProduto,
+                        valorProduto,fornecedor);
+
+                repositoryProduto.save(produto);
+            }
         }catch (InputMismatchException e){
             System.out.println(e.getMessage());
         }catch(DataIntegrityViolationException ex){

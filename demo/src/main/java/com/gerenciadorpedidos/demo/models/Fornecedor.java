@@ -44,6 +44,9 @@ public class Fornecedor {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Digite o nome do Fornecedor: ");
         var fornecedorNome = scanner.nextLine();
+
+        Fornecedor fornecedor = new Fornecedor(fornecedorNome);
+        repositoryFornecedor.save(fornecedor);
     }
 
     public static void listarFornecedor(RepositoryFornecedor repositoryFornecedor){

@@ -9,6 +9,7 @@ import com.gerenciadorpedidos.demo.repository.RepositoryProduto;
 import java.util.Scanner;
 
 import static com.gerenciadorpedidos.demo.models.Categoria.*;
+import static com.gerenciadorpedidos.demo.models.Fornecedor.inserirFornecedor;
 import static com.gerenciadorpedidos.demo.models.Fornecedor.listarFornecedor;
 import static com.gerenciadorpedidos.demo.models.Pedido.inserirPedido;
 import static com.gerenciadorpedidos.demo.models.Pedido.listarPedidos;
@@ -37,9 +38,10 @@ public class Principal {
         var menuEscolha = -1;
         while (menuEscolha != 0){
             System.out.println("""
-                1 - Produto
-                2 - Categoria
-                3 - Pedido
+                1 - Fornecedor
+                2 - Produto
+                3 - Categoria
+                4 - Pedido
                 
                
                 0 - Sair
@@ -48,19 +50,19 @@ public class Principal {
 
             switch (menuEscolha){
                 case 1:
-                    Produtos();
+                    Fornecedor();
                     break;
 
                 case 2:
-                    Categoria();
+                    Produtos();
                     break;
 
                 case 3:
-                    Pedidos();
+                    Categoria();
                     break;
 
                 case 4:
-                    Fornecedor();
+                    Pedidos();
                     break;
 
                 default:
@@ -76,11 +78,13 @@ public class Principal {
                 """);
         var escolha = scanner.nextInt();
         switch (escolha){
+
             case 1:
-                listarFornecedor(repositoryFornecedor);
+                inserirFornecedor(repositoryFornecedor);
                 break;
 
             case 2:
+                listarFornecedor(repositoryFornecedor);
                 break;
             default:
                 System.out.println("Insira uma Opção válida!");
@@ -145,7 +149,7 @@ public class Principal {
 
         switch (escolhaProduto){
             case 1:
-                inserirProduto(repositoryProduto);
+                inserirProduto(repositoryProduto,repositoryFornecedor);
                 break;
 
             case 2:

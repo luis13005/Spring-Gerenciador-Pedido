@@ -50,19 +50,19 @@ public class Principal {
 
             switch (menuEscolha){
                 case 1:
-                    Fornecedor();
+                    fornecedor();
                     break;
 
                 case 2:
-                    Produtos();
+                    produtos();
                     break;
 
                 case 3:
-                    Categoria();
+                    categoria();
                     break;
 
                 case 4:
-                    Pedidos();
+                    pedidos();
                     break;
 
                 default:
@@ -71,7 +71,7 @@ public class Principal {
         }
     }
 
-    private void Fornecedor(){
+    private void fornecedor(){
         System.out.println("""
                 1 - Inserir Fornecedor
                 2 - Listar Fornecedor
@@ -91,7 +91,7 @@ public class Principal {
         }
     }
 
-    private void Categoria(){
+    private void categoria(){
         System.out.println("""
                 \n1 - Inserir Categoria
                 2 - Listar Categorias
@@ -118,7 +118,7 @@ public class Principal {
         }
     }
 
-    private void Pedidos(){
+    private void pedidos(){
         System.out.println("""
                 \n1 - Inserir Peido
                 2 - Listar Pedidos
@@ -139,7 +139,7 @@ public class Principal {
         }
     }
 
-    private void Produtos(){
+    private void produtos(){
 
         System.out.println("""
                 1 - Inserir Produto

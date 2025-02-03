@@ -82,7 +82,10 @@ public class Produto {
 
     @Override
     public String toString() {
-        return "Nome: "+this.nome+"\nPreço: "+this.preco;
+
+        return "Nome: "+this.nome
+                +"\nPreço: "+this.preco
+                +"\nFornecedor: "+this.fornecedor.getNome();
     }
 
     public static void inserirProduto(RepositoryProduto repositoryProduto,

@@ -13,8 +13,7 @@ import static com.gerenciadorpedidos.demo.models.Fornecedor.inserirFornecedor;
 import static com.gerenciadorpedidos.demo.models.Fornecedor.listarFornecedor;
 import static com.gerenciadorpedidos.demo.models.Pedido.inserirPedido;
 import static com.gerenciadorpedidos.demo.models.Pedido.listarPedidos;
-import static com.gerenciadorpedidos.demo.models.Produto.inserirProduto;
-import static com.gerenciadorpedidos.demo.models.Produto.listarProdutos;
+import static com.gerenciadorpedidos.demo.models.Produto.*;
 
 public class Principal {
     private Scanner scanner = new Scanner(System.in);
@@ -95,7 +94,6 @@ public class Principal {
         System.out.println("""
                 \n1 - Inserir Categoria
                 2 - Listar Categorias
-                3 - Cadastrar Categoria no Produto 
                 
                 """);
         var escolha = scanner.nextInt();
@@ -107,10 +105,6 @@ public class Principal {
 
             case 2:
                 listarCategoria(repositoryCategoria);
-                break;
-
-                case 3:
-                    inserirCategoriaProduto(repositoryCategoria,repositoryProduto);
                 break;
 
             default:
@@ -144,16 +138,31 @@ public class Principal {
         System.out.println("""
                 1 - Inserir Produto
                 2 - Listar Produtos
+                3 - Consultar Produto
+                4 - Consultar Produtos por Categoria
+                5 - Consultar Produtos por Preço
+                
                 """);
         var escolhaProduto = scanner.nextInt();
 
         switch (escolhaProduto){
             case 1:
-                inserirProduto(repositoryProduto,repositoryFornecedor);
+                inserirProduto(repositoryProduto,repositoryFornecedor,repositoryCategoria);
                 break;
 
             case 2:
                 listarProdutos(repositoryProduto);
+                break;
+
+            case 3:
+                consultarProduto(repositoryProduto);
+
+            case 4:
+                consultarProdutoCategoria(repositoryProduto);
+                break;
+
+            case 5:
+                consultaProdutosPreco(repositoryProduto);
                 break;
 
             default:

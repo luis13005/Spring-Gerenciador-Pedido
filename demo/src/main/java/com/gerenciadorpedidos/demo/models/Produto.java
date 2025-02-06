@@ -1,5 +1,6 @@
 package com.gerenciadorpedidos.demo.models;
 
+import com.gerenciadorpedidos.demo.repository.RepositoryCategoria;
 import com.gerenciadorpedidos.demo.repository.RepositoryFornecedor;
 import com.gerenciadorpedidos.demo.repository.RepositoryProduto;
 import jakarta.persistence.*;
@@ -29,15 +30,18 @@ public class Produto {
     @ManyToOne
     @JoinColumn(name = "fornecedorId")
     private Fornecedor fornecedor;
+    private static Scanner leitura = new Scanner(System.in);
 
     public Produto(){}
 
     public Produto(String nome,
                    double preco,
-                   Fornecedor fornecedor){
+                   Fornecedor fornecedor,
+                   Categoria categoria){
             this.nome = nome;
             this.preco = preco;
             this.fornecedor = fornecedor;
+            this.categoria = categoria;
     }
 
     public Long getProdutoId() {
@@ -85,14 +89,14 @@ public class Produto {
 
         return "Nome: "+this.nome
                 +"\nPreço: "+this.preco
-                +"\nFornecedor: "+this.fornecedor.getNome();
+                +"\nFornecedor: "+this.fornecedor.getNome()
+                +"\nCategoria: "+this.categoria.getNome();
     }
 
     public static void inserirProduto(RepositoryProduto repositoryProduto,
-                                      RepositoryFornecedor repositoryFornecedor){
+                                      RepositoryFornecedor repositoryFornecedor,
+                                      RepositoryCategoria repositoryCategoria){
         try{
-            Scanner leitura = new Scanner(System.in);
-
             System.out.println("Digite o nome do produto");
             var nomeProduto = leitura.nextLine();
 
@@ -107,15 +111,22 @@ public class Produto {
             var nomeFornecedor = leitura.nextLine();
 
             System.out.println("Fornecedor: "+nomeFornecedor);
-            Optional<Fornecedor> first = fornecedores.stream()
+            Optional<Fornecedor> optionalFornecedor = fornecedores.stream()
                     .filter(f -> f.getNome().equalsIgnoreCase(nomeFornecedor))
                     .findFirst();
-            System.out.println("IS PRESENT: "+first.isPresent());
-            if (first.isPresent()){
-                Fornecedor fornecedor = first.get();
+            System.out.println("IS PRESENT: "+optionalFornecedor.isPresent());
+
+            System.out.println("Categorias: "+repositoryCategoria.findAll());
+            System.out.println("Escolha a Categoria: ");
+            var categoriaNome = leitura.nextLine();
+            Optional<Categoria> optionalCategoria = repositoryCategoria.findByNomeContaining(categoriaNome);
+
+            if (optionalFornecedor.isPresent() && optionalCategoria.isPresent()){
+                Fornecedor fornecedor = optionalFornecedor.get();
+                Categoria categoria = optionalCategoria.get();
                 System.out.println(fornecedor);
                 Produto produto = new Produto(nomeProduto,
-                        valorProduto,fornecedor);
+                        valorProduto,fornecedor,categoria);
 
                 repositoryProduto.save(produto);
             }
@@ -129,5 +140,30 @@ public class Produto {
     public static void listarProdutos(RepositoryProduto repositoryProduto){
 
         System.out.println(repositoryProduto.findAll());
+    }
+
+    public static void consultarProduto(RepositoryProduto repositoryProduto){
+        System.out.println("Digite o produto: ");
+        var produtoNome = leitura.nextLine();
+
+        List<Produto> produtos = repositoryProduto.findByNome(produtoNome);
+
+        produtos.stream()
+                .forEach(p -> System.out.println("Produto: "+p.getNome() ));
+    }
+
+    public static void consultarProdutoCategoria(RepositoryProduto repositoryProduto){
+        System.out.println("Digite o nome da Categoria: ");
+        var categoriaNome = leitura.nextLine();
+        List<Produto> produtoList = repositoryProduto.findByCategoriaNomeContaining(categoriaNome);
+
+        produtoList.stream().forEach(System.out::println);
+    }
+
+    public static void consultaProdutosPreco(RepositoryProduto repositoryProduto){
+        System.out.println("Digite o Preço: ");
+        var precoProduto = leitura.nextDouble();
+        List<Produto> produtoList = repositoryProduto.findByPrecoGreaterThanEqual(precoProduto);
+        produtoList.stream().forEach(p -> System.out.println("Produto: "+p.nome+" Preço: "+p.preco));
     }
 }

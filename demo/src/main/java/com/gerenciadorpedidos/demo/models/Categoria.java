@@ -65,38 +65,6 @@ public class Categoria {
         repositoryCategoria.save(categoria);
     }
 
-    public static void inserirCategoriaProduto(RepositoryCategoria repositoryCategoria,
-                                               RepositoryProduto repositoryProduto){
-        System.out.println(repositoryProduto.findAll());
-        System.out.println("Escolha em qual produto irá vincular: ");
-        var produtoNome = leitura.nextLine();
-        List<Produto> produtos = repositoryProduto.findAll();
-
-        Optional<Produto> escolhaProduto = produtos.stream()
-                .filter(p -> p.getNome().equalsIgnoreCase(produtoNome))
-                .findFirst();
-
-        if (escolhaProduto.isPresent()){
-            List<Categoria> categorias = repositoryCategoria.findAll();
-            categorias.forEach(System.out::println);
-            System.out.println("Escolha qual Categoria irá vincular: ");
-            var escolhaCategoria = leitura.nextLine();
-            Optional<Categoria> Findcategoria = categorias.stream()
-                    .filter(c -> c.getNome().equalsIgnoreCase(escolhaCategoria))
-                            .findFirst();
-
-            if (Findcategoria.isPresent()) {
-                produtos.clear();
-                produtos.add(escolhaProduto.get()) ;
-                Categoria categoria = Findcategoria.get();
-
-                categoria.setProduto(produtos);
-
-                repositoryCategoria.save(categoria);
-            }
-        }
-    }
-
     public static void listarCategoria(RepositoryCategoria repositoryCategoria){
         System.out.println(repositoryCategoria.findAll());
     }

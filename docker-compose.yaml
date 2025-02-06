@@ -1,6 +1,6 @@
 services:
   postgres:
-    container_name: postgresImage17.2
+    container_name: postgres17.2
     image: postgres
     restart: always
     environment:
@@ -9,3 +9,13 @@ services:
       POSTGRES_DB: ${DB_NAME}
     ports:
       - "5432:5432"
+
+  pgadmin:
+    container_name: PGADMIN
+    image: dpage/pgadmin4
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${DB_USER}
+    ports:
+      - "80:80"

@@ -3,9 +3,12 @@ package com.gerenciadorpedidos.demo.models;
 import com.gerenciadorpedidos.demo.repository.RepositoryPedido;
 import com.gerenciadorpedidos.demo.repository.RepositoryProduto;
 import jakarta.persistence.*;
+import org.springframework.cglib.core.Local;
 import org.springframework.data.jpa.repository.Query;
 
+import javax.swing.text.DateFormatter;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
@@ -17,7 +20,8 @@ public class Pedido {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long pedidoId;
     private LocalDate pedidoData;
-    @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    private LocalDate pedidoDataEntrega;
+    @ManyToMany(cascade = CascadeType.MERGE,fetch = FetchType.EAGER)
     @JoinTable(name = "produto_pedido",
             joinColumns = @JoinColumn(name = "PedidoId")
             ,inverseJoinColumns = @JoinColumn(name = "ProdutoId"))
@@ -25,8 +29,9 @@ public class Pedido {
 
     public Pedido(){}
 
-    public Pedido(LocalDate pedidoData){
+    public Pedido(LocalDate pedidoData, LocalDate pedidoDataEntrega){
         this.pedidoData = pedidoData;
+        this.pedidoDataEntrega = pedidoDataEntrega;
     }
 
     public LocalDate getPedidoData() {
@@ -56,27 +61,43 @@ public class Pedido {
                             "Id: "+n.getProdutoId()+" Produto: "+n.getNome()
                         )
                                 .forEach(System.out::println);
+        produtos.clear();
 
-        System.out.println("\nDigite o nome do Produto ou Zero para sair: ");
-        var prodNome = leitura.nextLine();
+        LocalDate dataEntregaFormatada = null;
+        Pedido pedido = new Pedido(LocalDate.now(),dataEntregaFormatada);
+
+        var prodNome = "-1";
         while (!prodNome.equalsIgnoreCase("0")) {
-                Optional<Produto> first = produtos.stream()
-                        .filter(p -> p.getNome().equalsIgnoreCase(prodNome))
-                        .findFirst();
-                if (first.isPresent()) {
-                    produtos.clear();
-                    produtos.add(first.get());
+            System.out.println("\nDigite o nome do Produto ou Zero para Finalizar: ");
+             prodNome = leitura.nextLine();
+                Produto produto = repositoryProduto.findByNomeContaining(prodNome);
+                try {
 
-                    System.out.println(produtos);
-                    Pedido pedido = new Pedido(LocalDate.now());
+                    produtos.add(produto);
+
                     pedido.setProdutos(produtos);
 
-                    repositoryPedido.save(pedido);
+                }catch (NullPointerException e){
+
                 }
         }
+        System.out.println("Digite a data de entrega: ");
+        String dataEntrega = leitura.nextLine();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        dataEntregaFormatada = LocalDate.parse(dataEntrega,formatter);
+        pedido.setPedidoDataEntrega(dataEntregaFormatada);
+        repositoryPedido.save(pedido);
     }
 
     public static void listarPedidos(RepositoryPedido repositoryPedido){
         System.out.println(repositoryPedido.findAll());
+    }
+
+    public LocalDate getPedidoDataEntrega() {
+        return pedidoDataEntrega;
+    }
+
+    public void setPedidoDataEntrega(LocalDate pedidoDataEntrega) {
+        this.pedidoDataEntrega = pedidoDataEntrega;
     }
 }

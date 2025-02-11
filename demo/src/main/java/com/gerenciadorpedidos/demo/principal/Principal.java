@@ -11,8 +11,7 @@ import java.util.Scanner;
 import static com.gerenciadorpedidos.demo.models.Categoria.*;
 import static com.gerenciadorpedidos.demo.models.Fornecedor.inserirFornecedor;
 import static com.gerenciadorpedidos.demo.models.Fornecedor.listarFornecedor;
-import static com.gerenciadorpedidos.demo.models.Pedido.inserirPedido;
-import static com.gerenciadorpedidos.demo.models.Pedido.listarPedidos;
+import static com.gerenciadorpedidos.demo.models.Pedido.*;
 import static com.gerenciadorpedidos.demo.models.Produto.*;
 
 public class Principal {
@@ -116,6 +115,8 @@ public class Principal {
         System.out.println("""
                 \n1 - Inserir Peido
                 2 - Listar Pedidos
+                3 - Pedidos Com data de entrega
+                
                 """);
         var escolha = scanner.nextInt();
 
@@ -126,6 +127,10 @@ public class Principal {
 
             case 2:
                 listarPedidos(repositoryPedido);
+                break;
+
+            case 3:
+                pedidosComDataEntrega(repositoryPedido);
                 break;
 
             default:
@@ -141,6 +146,9 @@ public class Principal {
                 3 - Consultar Produto
                 4 - Consultar Produtos por Categoria
                 5 - Consultar Produtos por Preço
+                6 - Consulta produtos por Categoria Order by preco desc
+                7 - Total Produtos por Categoria
+                8 - consulta
                 
                 """);
         var escolhaProduto = scanner.nextInt();
@@ -163,6 +171,18 @@ public class Principal {
 
             case 5:
                 consultaProdutosPreco(repositoryProduto);
+                break;
+
+            case 6:
+                consultaProdutosCategoriaPreco(repositoryProduto);
+                break;
+
+            case 7:
+                contaProdutosPorCategoria(repositoryProduto);
+                break;
+
+            case 8:
+                consulta(repositoryProduto);
                 break;
 
             default:

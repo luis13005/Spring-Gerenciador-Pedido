@@ -88,9 +88,9 @@ public class Produto {
     public String toString() {
 
         return "Nome: "+this.nome
-                +"\nPreço: "+this.preco
-                +"\nFornecedor: "+this.fornecedor.getNome()
-                +"\nCategoria: "+this.categoria.getNome();
+                +" ;Preço: "+this.preco
+                +" ;Fornecedor: "+this.fornecedor.getNome()
+                +" ;Categoria: "+this.categoria.getNome();
     }
 
     public static void inserirProduto(RepositoryProduto repositoryProduto,
@@ -165,5 +165,36 @@ public class Produto {
         var precoProduto = leitura.nextDouble();
         List<Produto> produtoList = repositoryProduto.findByPrecoGreaterThanEqual(precoProduto);
         produtoList.stream().forEach(p -> System.out.println("Produto: "+p.nome+" Preço: "+p.preco));
+    }
+
+    public static void consultaProdutosCategoriaPreco(RepositoryProduto repositoryProduto){
+        System.out.println("Escolha a categoria: ");
+        var categoriaNome = leitura.nextLine();
+
+        List<Produto> produtoList = repositoryProduto
+                .findByCategoriaNomeContainingOrderByPrecoDesc(categoriaNome);
+        produtoList.stream().forEach(System.out::println);
+    }
+
+    public static void contaProdutosPorCategoria(RepositoryProduto repositoryProduto){
+        System.out.println("Escolha a Prço: ");
+        var preco = leitura.nextInt();
+        Long totalProduto = repositoryProduto
+                .countProdutoIdByPrecoLessThanEqual(preco);
+
+        System.out.println("Total Produtos: "+totalProduto);
+    }
+
+    public static void consulta(RepositoryProduto repositoryProduto){
+        System.out.println("Escolha a Prço ou o nome: ");
+        int preco;
+        preco = leitura.nextInt();
+        String nome;
+        nome = leitura.nextLine();
+
+       List<Produto> produtoList = repositoryProduto
+                .findByPrecoLessThanOrNomeContaining(preco,nome);
+
+        produtoList.stream().forEach(System.out::println);
     }
 }

@@ -100,4 +100,9 @@ public class Pedido {
     public void setPedidoDataEntrega(LocalDate pedidoDataEntrega) {
         this.pedidoDataEntrega = pedidoDataEntrega;
     }
+
+    public static void pedidosComDataEntrega(RepositoryPedido repositoryPedido){
+        List<Pedido> pedidoList = repositoryPedido.findByPedidoDataEntregaIsNotNull();
+        pedidoList.stream().forEach(System.out::println);
+    }
 }

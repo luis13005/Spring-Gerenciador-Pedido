@@ -26,6 +26,7 @@ public class Pedido {
             joinColumns = @JoinColumn(name = "PedidoId")
             ,inverseJoinColumns = @JoinColumn(name = "ProdutoId"))
     private List<Produto> produtos;
+    private static Scanner leitura = new Scanner(System.in);
 
     public Pedido(){}
 
@@ -52,7 +53,7 @@ public class Pedido {
     }
 
     public static void inserirPedido(RepositoryProduto repositoryProduto, RepositoryPedido repositoryPedido){
-        Scanner leitura = new Scanner(System.in);
+
 
         List<Produto> produtos = repositoryProduto.findAll();
 
@@ -103,6 +104,37 @@ public class Pedido {
 
     public static void pedidosComDataEntrega(RepositoryPedido repositoryPedido){
         List<Pedido> pedidoList = repositoryPedido.findByPedidoDataEntregaIsNotNull();
+        pedidoList.stream().forEach(System.out::println);
+    }
+
+    public static void consultaPedidoData(RepositoryPedido repositoryPedido){
+        System.out.println("Escolha a Data: ");
+        var dataEscolha = leitura.nextLine();
+        LocalDate data = LocalDate.parse(dataEscolha);
+        List<Pedido> pedidoList = repositoryPedido
+                .findByPedidoDataGreaterThanEqual(data);
+
+        pedidoList.stream().forEach(System.out::println);
+    }
+
+    public static void consultaPedidoDataLess(RepositoryPedido repositoryPedido){
+        System.out.println("Escolha a Data: ");
+        var dataEscolha = leitura.nextLine();
+        LocalDate data = LocalDate.parse(dataEscolha);
+        List<Pedido> pedidoList = repositoryPedido
+                .findByPedidoDataLessThanEqual(data);
+
+        pedidoList.stream().forEach(System.out::println);
+    }
+
+    public static void consultaPeriodoData(RepositoryPedido repositoryPedido){
+        System.out.println("Digite a data inicio: ");
+        var dataEscolha = leitura.nextLine();
+        LocalDate dataInicio = LocalDate.parse(dataEscolha);
+        System.out.println("Digite a data Fim: ");
+        dataEscolha = leitura.nextLine();
+        LocalDate dataFim = LocalDate.parse(dataEscolha);
+        List<Pedido> pedidoList = repositoryPedido.findByPedidoDataBetween(dataInicio,dataFim);
         pedidoList.stream().forEach(System.out::println);
     }
 }

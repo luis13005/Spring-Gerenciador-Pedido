@@ -6,6 +6,7 @@ import com.gerenciadorpedidos.demo.repository.RepositoryProduto;
 import jakarta.persistence.*;
 import org.springframework.dao.DataIntegrityViolationException;
 
+import java.time.LocalDate;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Optional;
@@ -194,6 +195,21 @@ public class Produto {
 
        List<Produto> produtoList = repositoryProduto
                 .findByPrecoLessThanOrNomeContaining(preco,nome);
+
+        produtoList.stream().forEach(System.out::println);
+    }
+
+    public static void consultaTop2(RepositoryProduto repositoryProduto){
+
+        List<Produto> produtoList = repositoryProduto.findTop2OByOrderByPrecoDesc();
+
+        produtoList.stream().forEach(System.out::println);
+    }
+
+    public static void consultaTopByCategoria(RepositoryProduto repositoryProduto) {
+        System.out.println("Digite a categoria: ");
+        var categoriaNome = leitura.nextLine();
+        List<Produto> produtoList = repositoryProduto.findTop2ByCategoriaNome(categoriaNome);
 
         produtoList.stream().forEach(System.out::println);
     }

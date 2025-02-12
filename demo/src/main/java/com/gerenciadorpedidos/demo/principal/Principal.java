@@ -116,7 +116,9 @@ public class Principal {
                 \n1 - Inserir Peido
                 2 - Listar Pedidos
                 3 - Pedidos Com data de entrega
-                
+                4 - Consultar Pedidos apartir da data
+                5 - Consulta datas menores que
+                6 - Consulte Pedidos em um intevalo de dias
                 """);
         var escolha = scanner.nextInt();
 
@@ -124,15 +126,21 @@ public class Principal {
             case 1:
                 inserirPedido(repositoryProduto,repositoryPedido);
                 break;
-
             case 2:
                 listarPedidos(repositoryPedido);
                 break;
-
             case 3:
                 pedidosComDataEntrega(repositoryPedido);
                 break;
-
+            case 4:
+                consultaPedidoData(repositoryPedido);
+                break;
+            case 5:
+                consultaPedidoDataLess(repositoryPedido);
+                break;
+            case 6:
+                consultaPeriodoData(repositoryPedido);
+                break;
             default:
                 System.out.println("Insira uma Opção válida!");
         }
@@ -149,6 +157,8 @@ public class Principal {
                 6 - Consulta produtos por Categoria Order by preco desc
                 7 - Total Produtos por Categoria
                 8 - consulta
+                9 - Top 2 Produtos mais caros
+                10 - Top 2 Pordutos mais caros por categoria
                 
                 """);
         var escolhaProduto = scanner.nextInt();
@@ -184,7 +194,12 @@ public class Principal {
             case 8:
                 consulta(repositoryProduto);
                 break;
-
+            case 9 :
+                consultaTop2(repositoryProduto);
+                break;
+            case 10:
+                consultaTopByCategoria(repositoryProduto);
+                break;
             default:
                 System.out.println("Insira uma Opção válida!");
         }

@@ -188,10 +188,15 @@ public class Produto {
 
     public static void consulta(RepositoryProduto repositoryProduto){
         System.out.println("Escolha a Prço ou o nome: ");
-        int preco;
-        preco = leitura.nextInt();
-        String nome;
-        nome = leitura.nextLine();
+        var entrada = leitura.nextLine();
+        Double preco = null;
+        String nome = null;
+
+        try {
+            preco = Double.parseDouble(entrada);
+        }catch (NumberFormatException e){
+            nome = entrada;
+        }
 
        List<Produto> produtoList = repositoryProduto
                 .findByPrecoLessThanOrNomeContaining(preco,nome);

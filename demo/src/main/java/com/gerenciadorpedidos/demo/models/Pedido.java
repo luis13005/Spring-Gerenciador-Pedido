@@ -137,4 +137,9 @@ public class Pedido {
         List<Pedido> pedidoList = repositoryPedido.findByPedidoDataBetween(dataInicio,dataFim);
         pedidoList.stream().forEach(System.out::println);
     }
+
+    public static void consultaPedidosEntreDatas(RepositoryPedido repositoryPedido){
+        System.out.println("Digite a Data Inicio: ");
+//        String dataStr = ;
+    }
 }

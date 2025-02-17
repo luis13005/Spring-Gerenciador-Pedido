@@ -218,4 +218,30 @@ public class Produto {
 
         produtoList.stream().forEach(System.out::println);
     }
+
+    public static void consultaProdutoAcimaPreco(RepositoryProduto repositoryProduto){
+        System.out.println("Digite o preço: ");
+        double preco = leitura.nextDouble();
+
+        List<Produto> produtoList = repositoryProduto.consultaProdutoApartirPreco(preco);
+        produtoList.stream().forEach(System.out::println);
+    }
+
+    public static void consultaProdutosOrdenadosPreco(RepositoryProduto repositoryProduto){
+
+        List<Produto> produtoList = repositoryProduto.consultaProdutoOrdenadoPreco();
+        produtoList.stream().forEach(System.out::println);
+    }
+
+    public static void consultaProdutosOrdenadosPrecoDesc(RepositoryProduto repositoryProduto) {
+        List<Produto> produtoList = repositoryProduto.ConsultaProdutoOrdenadoPrecoDesc();
+        produtoList.stream().forEach(System.out::println);
+    }
+
+    public static void consultaProdutosComecamComLetra(RepositoryProduto repositoryProduto){
+        System.out.println("Digite a primeira letra do produto: ");
+        var letraProduto = leitura.nextLine();
+        List<Produto> produtoList = repositoryProduto.consultaProdutoPelaPrimeiraLetra(letraProduto);
+        produtoList.stream().forEach(System.out::println);
+    }
 }

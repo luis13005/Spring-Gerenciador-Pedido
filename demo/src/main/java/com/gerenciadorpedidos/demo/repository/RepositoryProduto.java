@@ -2,6 +2,7 @@ package com.gerenciadorpedidos.demo.repository;
 
 import com.gerenciadorpedidos.demo.models.Produto;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 import java.util.Optional;
@@ -16,4 +17,12 @@ public interface RepositoryProduto extends JpaRepository<Produto,Long> {
     List<Produto> findByPrecoLessThanOrNomeContaining(Double preco, String nome);
     List<Produto> findTop2OByOrderByPrecoDesc();
     List<Produto> findTop2ByCategoriaNome(String nomeCategoria);
+    @Query("SELECT p FROM Produto p where p.preco >= :preco")
+    List<Produto> consultaProdutoApartirPreco(double preco);
+    @Query("SELECT p FROM Produto p ORDER BY p.preco ASC")
+    List<Produto> consultaProdutoOrdenadoPreco();
+    @Query("SELECT p FROM Produto p ORDER BY p.preco DESC")
+    List<Produto> ConsultaProdutoOrdenadoPrecoDesc();
+    @Query("SELECT p FROM Produto p where p.nome ILIKE :letraProduto%")
+    List<Produto> consultaProdutoPelaPrimeiraLetra(String letraProduto);
 }

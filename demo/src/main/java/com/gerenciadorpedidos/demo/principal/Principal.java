@@ -50,21 +50,17 @@ public class Principal {
                 case 1:
                     fornecedor();
                     break;
-
                 case 2:
                     produtos();
                     break;
-
                 case 3:
                     categoria();
                     break;
-
                 case 4:
                     pedidos();
                     break;
-
                 default:
-                    System.out.println("selecione uma opção válida!!");
+                    System.out.println("Insira uma Opção válida!");
             }
         }
     }
@@ -119,6 +115,7 @@ public class Principal {
                 4 - Consultar Pedidos apartir da data
                 5 - Consulta datas menores que
                 6 - Consulte Pedidos em um intevalo de dias
+                7 - Pedidos feitos Entre datas
                 """);
         var escolha = scanner.nextInt();
 
@@ -141,6 +138,8 @@ public class Principal {
             case 6:
                 consultaPeriodoData(repositoryPedido);
                 break;
+            case 7:
+                consultaPedidosEntreDatas(repositoryPedido);
             default:
                 System.out.println("Insira uma Opção válida!");
         }
@@ -159,7 +158,11 @@ public class Principal {
                 8 - consulta
                 9 - Top 2 Produtos mais caros
                 10 - Top 2 Pordutos mais caros por categoria
-                
+                11 - Busca Produtos com o preço maior que
+                12 - Produtos ordenados por preço crescente
+                13 - Produtos ordenados por preço decrescente
+                14 - Produtos que começam com a letra
+             
                 """);
         var escolhaProduto = scanner.nextInt();
 
@@ -167,30 +170,23 @@ public class Principal {
             case 1:
                 inserirProduto(repositoryProduto,repositoryFornecedor,repositoryCategoria);
                 break;
-
             case 2:
                 listarProdutos(repositoryProduto);
                 break;
-
             case 3:
                 consultarProduto(repositoryProduto);
-
             case 4:
                 consultarProdutoCategoria(repositoryProduto);
                 break;
-
             case 5:
                 consultaProdutosPreco(repositoryProduto);
                 break;
-
             case 6:
                 consultaProdutosCategoriaPreco(repositoryProduto);
                 break;
-
             case 7:
                 contaProdutosPorCategoria(repositoryProduto);
                 break;
-
             case 8:
                 consulta(repositoryProduto);
                 break;
@@ -200,6 +196,16 @@ public class Principal {
             case 10:
                 consultaTopByCategoria(repositoryProduto);
                 break;
+            case 11:
+                consultaProdutoAcimaPreco(repositoryProduto);
+                break;
+            case 12:
+                consultaProdutosOrdenadosPreco(repositoryProduto);
+                break;
+            case 13:
+                consultaProdutosOrdenadosPrecoDesc(repositoryProduto);
+            case 14:
+                consultaProdutosComecamComLetra(repositoryProduto);
             default:
                 System.out.println("Insira uma Opção válida!");
         }

@@ -244,4 +244,22 @@ public class Produto {
         List<Produto> produtoList = repositoryProduto.consultaProdutoPelaPrimeiraLetra(letraProduto);
         produtoList.stream().forEach(System.out::println);
     }
+
+    public static void mediaProdutos(RepositoryProduto repositoryProduto){
+        int mediaProdutos = repositoryProduto.mediaProdutos();
+        System.out.println("A média de preço dos produtos é: "+mediaProdutos);
+    }
+
+    public static void produtoMaisCaro(RepositoryProduto repositoryProduto){
+        Produto produto = repositoryProduto.produtoMaisCaro();
+        System.out.println(produto);
+    }
+
+    public static void produtosPorCategoria(RepositoryProduto repositoryProduto){
+        System.out.println("Digite o nome da categoria que deseja: ");
+        var nomeCategoria = leitura.nextLine();
+
+        int totalProdutos = repositoryProduto.totalProdutosCategoria( nomeCategoria);
+        System.out.println(totalProdutos);
+    }
 }

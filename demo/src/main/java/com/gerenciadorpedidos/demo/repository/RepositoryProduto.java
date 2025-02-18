@@ -25,4 +25,10 @@ public interface RepositoryProduto extends JpaRepository<Produto,Long> {
     List<Produto> ConsultaProdutoOrdenadoPrecoDesc();
     @Query("SELECT p FROM Produto p where p.nome ILIKE :letraProduto%")
     List<Produto> consultaProdutoPelaPrimeiraLetra(String letraProduto);
+    @Query("SELECT AVG(p.preco) FROM Produto p")
+    int mediaProdutos();
+    @Query("SELECT p FROM Produto p where p.preco = (SELECT MAX(p.preco) FROM Produto p)")
+    Produto produtoMaisCaro();
+    @Query("SELECT count(p) FROM Produto p, Categoria c WHERE c.nome ILIKE %:nomeCategoria%")
+    int totalProdutosCategoria(String nomeCategoria);
 }

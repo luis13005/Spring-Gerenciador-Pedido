@@ -16,8 +16,8 @@ public class Categoria {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long categoriaId;
     private String nome;
-    @OneToMany(mappedBy = "ProdutoId",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
-    private List<Produto> produto;
+//    @OneToMany(mappedBy = "ProdutoId",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+//    private List<Produto> produto;
     @Transient
     private final static Scanner leitura = new Scanner(System.in);
 
@@ -43,14 +43,14 @@ public class Categoria {
         this.nome = nome;
     }
 
-    public List<Produto> getProduto() {
-        return produto;
-    }
+//    public List<Produto> getProduto() {
+//        return produto;
+//    }
 
-    public void setProduto(List<Produto> produto) {
-        produto.forEach(p -> p.setCategoria(this));
-        this.produto = produto;
-    }
+//    public void setProduto(List<Produto> produto) {
+//        produto.forEach(p -> p.setCategoria(this));
+//        this.produto = produto;
+//    }
 
     @Override
     public String toString() {

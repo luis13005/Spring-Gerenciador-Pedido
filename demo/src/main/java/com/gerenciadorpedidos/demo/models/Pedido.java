@@ -140,6 +140,12 @@ public class Pedido {
 
     public static void consultaPedidosEntreDatas(RepositoryPedido repositoryPedido){
         System.out.println("Digite a Data Inicio: ");
-//        String dataStr = ;
+        String dataStr = leitura.nextLine();
+        LocalDate data = LocalDate.parse(dataStr);
+        System.out.println("Digite a Data Fim: ");
+        dataStr = leitura.nextLine();
+        LocalDate dataFim = LocalDate.parse(dataStr);
+        List<Pedido> pedidoList = repositoryPedido.consutalPedidoEntreDatas(data,dataFim);
+        pedidoList.stream().forEach(System.out::println);
     }
 }

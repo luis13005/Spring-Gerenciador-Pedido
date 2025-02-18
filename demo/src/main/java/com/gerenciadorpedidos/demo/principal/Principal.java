@@ -13,6 +13,7 @@ import static com.gerenciadorpedidos.demo.models.Fornecedor.inserirFornecedor;
 import static com.gerenciadorpedidos.demo.models.Fornecedor.listarFornecedor;
 import static com.gerenciadorpedidos.demo.models.Pedido.*;
 import static com.gerenciadorpedidos.demo.models.Produto.*;
+import static com.gerenciadorpedidos.demo.models.Produto.contaProdutosPorCategoria;
 
 public class Principal {
     private Scanner scanner = new Scanner(System.in);
@@ -162,7 +163,10 @@ public class Principal {
                 12 - Produtos ordenados por preço crescente
                 13 - Produtos ordenados por preço decrescente
                 14 - Produtos que começam com a letra
-             
+                15 - Média dos Produtos
+                16 - O produto mais caro
+                17 - Total Produtos por Categoria
+                
                 """);
         var escolhaProduto = scanner.nextInt();
 
@@ -204,8 +208,19 @@ public class Principal {
                 break;
             case 13:
                 consultaProdutosOrdenadosPrecoDesc(repositoryProduto);
+                break;
             case 14:
                 consultaProdutosComecamComLetra(repositoryProduto);
+                break;
+            case 15:
+                mediaProdutos(repositoryProduto);
+                break;
+            case 16:
+                produtoMaisCaro(repositoryProduto);
+                break;
+            case 17:
+                produtosPorCategoria(repositoryProduto);
+                break;
             default:
                 System.out.println("Insira uma Opção válida!");
         }

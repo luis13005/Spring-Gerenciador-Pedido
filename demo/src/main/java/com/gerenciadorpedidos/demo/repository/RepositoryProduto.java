@@ -31,4 +31,8 @@ public interface RepositoryProduto extends JpaRepository<Produto,Long> {
     Produto produtoMaisCaro();
     @Query("SELECT count(p) FROM Produto p, Categoria c WHERE c.nome ILIKE %:nomeCategoria%")
     int totalProdutosCategoria(String nomeCategoria);
+    @Query("SELECT p FROM Produto p INNER JOIN Categoria c ON p.categoria = c where p.nome ILIKE %:nome% OR c.nome ILIKE %:nome%")
+    List<Produto> consutaProdutoPorNomeOuCategoria(String nome);
+    @Query(value = "SELECT * FROM produto order by valor desc limit 5",nativeQuery = true)
+    List<Produto> consultaTopCarosNativo();
 }

@@ -166,6 +166,8 @@ public class Principal {
                 15 - Média dos Produtos
                 16 - O produto mais caro
                 17 - Total Produtos por Categoria
+                18 - Consulta Produtos por nome ou categoria
+                19 - Produtos mais caros nativo
                 
                 """);
         var escolhaProduto = scanner.nextInt();
@@ -220,6 +222,12 @@ public class Principal {
                 break;
             case 17:
                 produtosPorCategoria(repositoryProduto);
+                break;
+            case 18:
+                consultaProdutosPorNomeOuCategoria(repositoryProduto);
+                break;
+            case 19:
+                consultaTopProdutosNativo(repositoryProduto);
                 break;
             default:
                 System.out.println("Insira uma Opção válida!");

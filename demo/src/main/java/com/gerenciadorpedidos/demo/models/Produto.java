@@ -262,4 +262,18 @@ public class Produto {
         int totalProdutos = repositoryProduto.totalProdutosCategoria( nomeCategoria);
         System.out.println(totalProdutos);
     }
+
+    public static void consultaProdutosPorNomeOuCategoria(RepositoryProduto repositoryProduto){
+        System.out.println("Digite o nome ou a categoria: ");
+        var nome = leitura.nextLine();
+
+        List<Produto> produtoList = repositoryProduto.consutaProdutoPorNomeOuCategoria(nome);
+        produtoList.stream().forEach(System.out::println);
+    }
+
+    public static void consultaTopProdutosNativo(RepositoryProduto repositoryProduto){
+        List<Produto> produtoList = repositoryProduto.consultaTopCarosNativo();
+
+        produtoList.stream().forEach(System.out::println);
+    }
 }
